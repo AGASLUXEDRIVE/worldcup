@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA World Cup 2026™ - Official Ticketing</title>
+    <meta name="description" content="Secure your official FIFA World Cup 2026™ match tickets. Browse matches, select seats, and book your World Cup experience.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js">
+    </script>
+    <style>
+        :root {
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Montserrat', sans-serif;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --radius-sm: 12px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --gold: #c9a84c;
+            --gold-light: #e0c76e;
+            --gold-dark: #a07d2e;
+            --blue-accent: #3b7ddd;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
+        }
+        [data-theme="dark"] {
+            --bg-primary: #0a0a14;
+            --bg-secondary: #111122;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: #161630;
+            --bg-glass: rgba(20, 20, 50, 0.6);
+            --text-primary: #f0f0f5;
+            --text-secondary: #c0c0d0;
+            --text-muted: #8888a0;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.15);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --overlay: rgba(0, 0, 0, 0.7);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --badge-bg: rgba(201, 168, 76, 0.15);
+            --badge-text: #e0c76e;
+            --nav-bg: rgba(10, 10, 20, 0.85);
+        }
+        [data-theme="light"] {
+            --bg-primary: #f5f5f8;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #eef0f5;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --text-primary: #1a1a2e;
+            --text-secondary: #444460;
+            --text-muted: #777790;
+            --border: rgba(0, 0, 0, 0.08);
+            --border-strong: rgba(0, 0, 0, 0.15);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+            --overlay: rgba(0, 0, 0, 0.5);
+            --input-bg: rgba(0, 0, 0, 0.03);
+            --badge-bg: rgba(180, 150, 40, 0.12);
+            --badge-text: #8a6d20;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background var(--transition), color var(--transition);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::selection {
+            background: var(--gold);
+            color: #000;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 3px;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all var(--transition);
+        }
+        .navbar.scrolled {
+            box-shadow: var(--shadow-lg);
+            height: 62px;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .nav-brand .trophy-icon {
+            font-size: 1.6rem;
+            color: var(--gold);
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            position: relative;
+            white-space: nowrap;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+            background: var(--glass-bg);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 3px;
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+            font-size: 1.1rem;
+            position: relative;
+        }
+        .btn-icon:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+        }
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--gold);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: popIn 0.3s ease;
+        }
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+            }
+            60% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .page {
+            display: none;
+            padding-top: 70px;
+            min-height: 100vh;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a20 0%, #0d1a30 30%, #0a1a15 60%, #0a0a20 100%);
+        }
+        .hero-video-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.7) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            padding: 2rem;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 16px rgba(201, 168, 76, 0);
+            }
+        }
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #e0c76e 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition);
+            text-decoration: none;
+            font-family: var(--font-body);
+            letter-spacing: 0.3px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+            color: #000;
+            box-shadow: 0 8px 30px rgba(201, 168, 76, 0.35);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(201, 168, 76, 0.5);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: #fff;
+        }
+        .btn-outline:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .btn-sm {
+            padding: 0.5rem 1.2rem;
+            font-size: 0.8rem;
+            border-radius: 30px;
+        }
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+        .countdown-section {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 0;
+        }
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .countdown-item {
+            text-align: center;
+            min-width: 80px;
+        }
+        .countdown-value {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+            animation: countPulse 1s ease-in-out infinite;
+        }
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+        @keyframes countPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        .section {
+            padding: 4rem 0;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .gold-underline {
+            width: 60px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 2px;
+            margin: 1rem auto;
+        }
+        .match-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+        .match-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all var(--transition);
+            cursor: pointer;
+            position: relative;
+            box-shadow: var(--shadow-card);
+        }
+        .match-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(201, 168, 76, 0.08);
+        }
+        .match-card-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            background: var(--bg-tertiary);
+        }
+        .match-card .team {
+            text-align: center;
+            flex: 1;
+        }
+        .match-card .team-flag {
+            font-size: 2.5rem;
+            margin-bottom: 0.3rem;
+        }
+        .match-card .team-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .match-card .vs {
+            font-weight: 900;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-family: var(--font-heading);
+        }
+        .match-card-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .match-info-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .match-info-row i {
+            width: 18px;
+            color: var(--gold);
+            text-align: center;
+        }
+        .match-card-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ticket-price {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+        .availability-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .availability-dot.high {
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+        }
+        .availability-dot.medium {
+            background: var(--warning);
+            box-shadow: 0 0 8px var(--warning);
+        }
+        .availability-dot.low {
+            background: var(--danger);
+            box-shadow: 0 0 8px var(--danger);
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% {
+                opacity: 0.4;
+            }
+        }
+        .city-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .city-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .city-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-lg);
+        }
+        .city-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        .city-card-body {
+            padding: 1.2rem;
+        }
+        .city-card-body h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .city-card-body .capacity {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .search-section {
+            background: var(--bg-secondary);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 70px;
+            z-index: 50;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+        .search-row {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-input,
+        .search-select {
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-strong);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            min-width: 150px;
+            flex: 1;
+        }
+        .search-input:focus,
+        .search-select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.1);
+        }
+        .ticket-detail-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 900px) {
+            .ticket-detail-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stadium-map {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .seating-area {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 4px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .seat {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            font-size: 0.55rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+            font-weight: 700;
+        }
+        .seat.cat1 {
+            background: #c9a84c33;
+            border-color: #c9a84c;
+        }
+        .seat.cat1:hover,
+        .seat.cat1.selected {
+            background: #c9a84c;
+            color: #000;
+            transform: scale(1.2);
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.6);
+        }
+        .seat.cat2 {
+            background: #3b7ddd33;
+            border-color: #3b7ddd;
+        }
+        .seat.cat2:hover,
+        .seat.cat2.selected {
+            background: #3b7ddd;
+            color: #fff;
+            transform: scale(1.2);
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(59, 125, 221, 0.6);
+        }
+        .seat.cat3 {
+            background: #2ecc7133;
+            border-color: #2ecc71;
+        }
+        .seat.cat3:hover,
+        .seat.cat3.selected {
+            background: #2ecc71;
+            color: #000;
+            transform: scale(1.2);
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
+        }
+        .seat.vip {
+            background: #e74c3c33;
+            border-color: #e74c3c;
+        }
+        .seat.vip:hover,
+        .seat.vip.selected {
+            background: #e74c3c;
+            color: #fff;
+            transform: scale(1.2);
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
+        }
+        .seat.taken {
+            background: #555;
+            border-color: #444;
+            cursor: not-allowed;
+            opacity: 0.4;
+        }
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+        .cart-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            z-index: 2001;
+            transition: right var(--transition);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+            border-left: 1px solid var(--border);
+        }
+        .cart-sidebar.open {
+            right: 0;
+        }
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            margin-bottom: 0.8rem;
+            border: 1px solid var(--border);
+            align-items: center;
+        }
+        .cart-item-info {
+            flex: 1;
+            font-size: 0.85rem;
+        }
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cart-item-qty button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all var(--transition);
+        }
+        .cart-item-qty button:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .cart-total-row.grand {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-strong);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: all var(--transition);
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.08);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .payment-methods {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .payment-option {
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            text-align: center;
+        }
+        .payment-option:hover,
+        .payment-option.selected {
+            border-color: var(--gold);
+            background: var(--badge-bg);
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .dash-sidebar {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+        .dash-sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .dash-sidebar a:hover,
+        .dash-sidebar a.active {
+            background: var(--glass-bg);
+            color: var(--gold);
+        }
+        .ticket-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all var(--transition);
+        }
+        .ticket-card:hover {
+            border-color: var(--gold);
+        }
+        .qr-preview {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            padding: 2rem;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 3000;
+            background: var(--bg-card);
+            border: 1px solid var(--gold);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            animation: slideInRight 0.4s ease, fadeOut 0.4s ease 2.6s forwards;
+            color: var(--text-primary);
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            z-index: 999;
+            padding: 0.5rem 1rem;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .mobile-bottom-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.7rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all var(--transition);
+        }
+        .mobile-bottom-nav a.active {
+            color: var(--gold);
+        }
+        .mobile-bottom-nav a i {
+            font-size: 1.2rem;
+        }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 2500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+        }
+        .footer {
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-col h5 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        .footer-col a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            transition: color var(--transition);
+        }
+        .footer-col a:hover {
+            color: var(--gold);
+        }
+        .newsletter-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .newsletter-input input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-strong);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .currency-selector,
+        .lang-selector {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+        .trust-strip {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .trust-item i {
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        @media (max-width: 1024px) {
+            .nav-links a {
+                padding: 0.4rem 0.7rem;
+                font-size: 0.8rem;
+            }
+            .match-cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--nav-bg);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-bottom-nav {
+                display: flex;
+            }
+            body {
+                padding-bottom: 70px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .countdown-value {
+                font-size: 2rem;
+            }
+            .search-row {
+                flex-direction: column;
+            }
+            .search-input,
+            .search-select {
+                width: 100%;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .dash-sidebar {
+                position: static;
+                display: flex;
+                overflow-x: auto;
+                gap: 0.5rem;
+                padding: 0.8rem;
+            }
+            .dash-sidebar a {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .ticket-detail-layout {
+                grid-template-columns: 1fr;
+            }
+            .cart-sidebar {
+                max-width: 100%;
+            }
+            .trust-strip {
+                gap: 1rem;
+                padding: 1.5rem 1rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .hero-btns {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .countdown-grid {
+                gap: 0.8rem;
+            }
+            .countdown-value {
+                font-size: 1.6rem;
+            }
+            .match-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .city-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <a href="#" class="nav-brand" onclick="navigateTo('home')">
+            <span class="trophy-icon">🏆</span> FIFA World Cup 2026™
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="active" data-page="home" onclick="navigateTo('home')">Home</a></li>
+            <li><a href="#" data-page="matches" onclick="navigateTo('matches')">Matches</a></li>
+            <li><a href="#" data-page="dashboard" onclick="navigateTo('dashboard')">My Tickets</a></li>
+            <li><a href="#" data-page="checkout" onclick="navigateTo('checkout')">Checkout</a></li>
+        </ul>
+        <div class="nav-actions">
+            <select class="currency-selector" id="currencySelect" onchange="updateCurrency()" title="Currency">
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="GBP">£ GBP</option>
+                <option value="KES">KSh KES</option>
+            </select>
+            <select class="lang-selector" id="langSelect" title="Language">
+                <option value="EN">EN</option>
+                <option value="ES">ES</option>
+                <option value="FR">FR</option>
+                <option value="AR">AR</option>
+                <option value="PT">PT</option>
+            </select>
+            <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark/light mode">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+            <button class="btn-icon" onclick="toggleCart()" title="Shopping Cart" aria-label="Open cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+            </button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>🛒 Your Cart</h3>
+            <button class="btn-icon" onclick="toggleCart()" aria-label="Close cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="color:var(--text-muted);text-align:center;padding:2rem;">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
+            <div class="cart-total-row"><span>Service Fee (5%)</span><span id="cartServiceFee">$0</span></div>
+            <div class="cart-total-row"><span>Tax (8%)</span><span id="cartTax">$0</span></div>
+            <div class="cart-total-row grand"><span>Total</span><span id="cartGrandTotal">$0</span></div>
+            <button class="btn btn-primary btn-block" style="margin-top:1rem;" onclick="navigateTo('checkout');toggleCart();">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div id="toastContainer"></div>
+
+    <!-- PAGE: HOME -->
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <video class="hero-video-bg" autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Crect fill='%230a0a20' width='1920' height='1080'/%3E%3C/svg%3E">
+                <source src="data:video/mp4;base64," type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">⚽ Official Ticketing Platform</div>
+                    <h1>Secure Your World Cup Experience</h1>
+                    <p class="hero-subtitle">Official match tickets available now. Be part of the greatest sporting event on Earth — June 11 – July 19, 2026.</p>
+                    <div class="hero-btns">
+                        <button class="btn btn-primary" onclick="navigateTo('matches')"><i class="fas fa-ticket-alt"></i> Browse Matches</button>
+                        <button class="btn btn-outline" onclick="navigateTo('matches')"><i class="fas fa-shopping-cart"></i> Buy Tickets</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="countdown-section">
+            <div class="container">
+                <div class="countdown-grid" id="countdownGrid">
+                    <div class="countdown-item"><div class="countdown-value" id="countDays">00</div><div class="countdown-label">Days</div></div>
+                    <div class="countdown-item"><div class="countdown-value" id="countHours">00</div><div class="countdown-label">Hours</div></div>
+                    <div class="countdown-item"><div class="countdown-value" id="countMins">00</div><div class="countdown-label">Minutes</div></div>
+                    <div class="countdown-item"><div class="countdown-value" id="countSecs">00</div><div class="countdown-label">Seconds</div></div>
+                </div>
+                <p style="text-align:center;margin-top:0.8rem;color:var(--text-muted);font-size:0.9rem;">Until Tournament Kickoff — June 11, 2026</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Matches</h2>
+                    <div class="gold-underline"></div>
+                    <p class="section-subtitle">Don't miss these highly anticipated fixtures</p>
+                </div>
+                <div class="match-cards-grid" id="featuredMatches"></div>
+                <div style="text-align:center;margin-top:2rem;">
+                    <button class="btn btn-outline" onclick="navigateTo('matches')">View All Matches <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background:var(--bg-secondary);">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Host Cities</h2>
+                    <div class="gold-underline"></div>
+                    <p class="section-subtitle">16 cities across the United States, Canada, and Mexico</p>
+                </div>
+                <div class="city-cards-grid" id="cityCards"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="trust-strip">
+                    <div class="trust-item"><i class="fas fa-shield-halved"></i> Secure Payments</div>
+                    <div class="trust-item"><i class="fas fa-lock"></i> Encrypted Checkout</div>
+                    <div class="trust-item"><i class="fas fa-certificate"></i> Official Ticket Guarantee</div>
+                    <div class="trust-item"><i class="fas fa-headset"></i> 24/7 Support</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: MATCHES -->
+    <div class="page" id="page-matches">
+        <div class="search-section">
+            <div class="container">
+                <div class="search-row">
+                    <input type="text" class="search-input" placeholder="🔍 Search by team or country..." id="searchTeam" oninput="filterMatches()">
+                    <select class="search-select" id="searchCity" onchange="filterMatches()">
+                        <option value="">All Cities</option>
+                    </select>
+                    <select class="search-select" id="searchStadium" onchange="filterMatches()">
+                        <option value="">All Stadiums</option>
+                    </select>
+                    <input type="date" class="search-input" id="searchDate" onchange="filterMatches()">
+                </div>
+            </div>
+        </div>
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">All Matches</h2>
+                    <div class="gold-underline"></div>
+                </div>
+                <div class="match-cards-grid" id="allMatches"></div>
+                <p id="noMatchesMsg" style="display:none;text-align:center;color:var(--text-muted);padding:3rem;">No matches found matching your criteria.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: TICKET DETAILS -->
+    <div class="page" id="page-ticket-detail">
+        <section class="section">
+            <div class="container">
+                <div class="ticket-detail-layout" id="ticketDetailContent"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: CHECKOUT -->
+    <div class="page" id="page-checkout">
+        <section class="section">
+            <div class="container" style="max-width:800px;">
+                <div class="section-header">
+                    <h2 class="section-title">Checkout</h2>
+                    <div class="gold-underline"></div>
+                </div>
+                <div class="glass-card" id="checkoutContent">
+                    <p style="color:var(--text-muted);text-align:center;padding:2rem;">Your cart is empty. <a href="#" style="color:var(--gold);" onclick="navigateTo('matches')">Browse matches</a> to add tickets.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE: DASHBOARD -->
+    <div class="page" id="page-dashboard">
+        <section class="section">
+            <div class="container">
+                <div class="dashboard-grid">
+                    <div class="dash-sidebar" id="dashSidebar">
+                        <a href="#" class="active" data-dash="tickets" onclick="switchDashTab('tickets',this)"><i class="fas fa-ticket"></i> My Tickets</a>
+                        <a href="#" data-dash="upcoming" onclick="switchDashTab('upcoming',this)"><i class="fas fa-calendar"></i> Upcoming</a>
+                        <a href="#" data-dash="history" onclick="switchDashTab('history',this)"><i class="fas fa-clock-rotate-left"></i> History</a>
+                        <a href="#" data-dash="profile" onclick="switchDashTab('profile',this)"><i class="fas fa-user"></i> Profile</a>
+                        <a href="#" data-dash="notifications" onclick="switchDashTab('notifications',this)"><i class="fas fa-bell"></i> Notifications</a>
+                    </div>
+                    <div id="dashContent">
+                        <h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">🎫 My Tickets</h3>
+                        <div id="dashTickets"><p style="color:var(--text-muted);">No tickets purchased yet. <a href="#" style="color:var(--gold);" onclick="navigateTo('matches')">Buy your first ticket!</a></p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal-overlay" id="qrModal">
+        <div class="modal" id="qrModalContent"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h5>About</h5>
+                    <a href="#">About FIFA</a>
+                    <a href="#">World Cup 2026</a>
+                    <a href="#">Host Cities</a>
+                    <a href="#">Sustainability</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Support</h5>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Help Center</a>
+                    <a href="#">Accessibility</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Legal</h5>
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Refund Policy</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Newsletter</h5>
+                    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem;">Get ticket alerts & updates</p>
+                    <div class="newsletter-input">
+                        <input type="email" placeholder="Your email">
+                        <button class="btn btn-primary btn-sm">Subscribe</button>
+                    </div>
+                    <div style="margin-top:1rem;display:flex;gap:0.8rem;font-size:1.3rem;">
+                        <a href="#" style="color:var(--text-muted);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color:var(--text-muted);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color:var(--text-muted);"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color:var(--text-muted);"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 FIFA World Cup Official Ticketing. All rights reserved. Secure & encrypted transactions.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="#" class="active" data-page="home" onclick="navigateTo('home')"><i class="fas fa-home"></i> Home</a>
+        <a href="#" data-page="matches" onclick="navigateTo('matches')"><i class="fas fa-futbol"></i> Matches</a>
+        <a href="#" onclick="toggleCart()"><i class="fas fa-shopping-cart"></i> Cart</a>
+        <a href="#" data-page="dashboard" onclick="navigateTo('dashboard')"><i class="fas fa-ticket"></i> Tickets</a>
+        <a href="#" data-page="checkout" onclick="navigateTo('checkout')"><i class="fas fa-credit-card"></i> Pay</a>
+    </div>
+
+    <script>
+        (function() {
+            let cart = JSON.parse(localStorage.getItem('fifa_cart') || '[]');
+            let purchasedTickets = JSON.parse(localStorage.getItem('fifa_purchased') || '[]');
+            let currentCurrency = localStorage.getItem('fifa_currency') || 'USD';
+            let currentTheme = localStorage.getItem('fifa_theme') || 'dark';
+            let currentPage = 'home';
+            let selectedSeats = [];
+
+            const teams = [
+                { name: 'USA', flag: '🇺🇸', code: 'USA' }, { name: 'Mexico', flag: '🇲🇽', code: 'MEX' },
+                { name: 'Canada', flag: '🇨🇦', code: 'CAN' }, { name: 'Argentina', flag: '🇦🇷', code: 'ARG' },
+                { name: 'Brazil', flag: '🇧🇷', code: 'BRA' }, { name: 'France', flag: '🇫🇷', code: 'FRA' },
+                { name: 'England', flag: '🇬🇧', code: 'ENG' },
+                { name: 'Germany', flag: '🇩🇪', code: 'GER' }, { name: 'Portugal', flag: '🇵🇹', code: 'POR' },
+                { name: 'Netherlands', flag: '🇳🇱', code: 'NED' }, { name: 'Italy', flag: '🇮🇹', code: 'ITA' },
+                { name: 'Japan', flag: '🇯🇵', code: 'JPN' }, { name: 'Morocco', flag: '🇲🇦', code: 'MAR' },
+                { name: 'Senegal', flag: '🇸🇳', code: 'SEN' }, { name: 'Uruguay', flag: '🇺🇾', code: 'URU' },
+                { name: 'Colombia', flag: '🇨🇴', code: 'COL' },
+            ];
+
+            const cities = [
+                { name: 'New York / New Jersey', stadium: 'MetLife Stadium', capacity: '82,500', icon: '🏟️', country: 'USA' },
+                { name: 'Los Angeles', stadium: 'SoFi Stadium', capacity: '70,240', icon: '🏟️', country: 'USA' },
+                { name: 'Dallas', stadium: 'AT&T Stadium', capacity: '80,000', icon: '🏟️', country: 'USA' },
+                { name: 'Miami', stadium: 'Hard Rock Stadium', capacity: '64,767', icon: '🏟️', country: 'USA' },
+                { name: 'Atlanta', stadium: 'Mercedes-Benz Stadium', capacity: '71,000', icon: '🏟️', country: 'USA' },
+                { name: 'Seattle', stadium: 'Lumen Field', capacity: '68,740', icon: '🏟️', country: 'USA' },
+                { name: 'Mexico City', stadium: 'Estadio Azteca', capacity: '87,523', icon: '🏟️', country: 'Mexico' },
+                { name: 'Toronto', stadium: 'BMO Field', capacity: '45,500', icon: '🏟️', country: 'Canada' },
+            ];
+
+            const matches = [
+                { id: 1, home: teams[3], away: teams[7], date: '2026-06-11', time: '20:00', city: cities[0], stadium: cities[0].stadium, price: 250, availability: 'medium', group: 'Opening Match' },
+                { id: 2, home: teams[0], away: teams[2], date: '2026-06-12', time: '17:00', city: cities[1], stadium: cities[1].stadium, price: 180, availability: 'high', group: 'Group A' },
+                { id: 3, home: teams[4], away: teams[8], date: '2026-06-13', time: '20:00', city: cities[2], stadium: cities[2].stadium, price: 300, availability: 'low', group: 'Group B' },
+                { id: 4, home: teams[5], away: teams[9], date: '2026-06-14', time: '18:00', city: cities[3], stadium: cities[3].stadium, price: 220, availability: 'high', group: 'Group C' },
+                { id: 5, home: teams[1], away: teams[6], date: '2026-06-15', time: '21:00', city: cities[6], stadium: cities[6].stadium, price: 200, availability: 'medium', group: 'Group D' },
+                { id: 6, home: teams[10], away: teams[12], date: '2026-06-16', time: '16:00', city: cities[4], stadium: cities[4].stadium, price: 150, availability: 'high', group: 'Group E' },
+                { id: 7, home: teams[13], away: teams[15], date: '2026-06-17', time: '19:00', city: cities[5], stadium: cities[5].stadium, price: 190, availability: 'medium', group: 'Group F' },
+                { id: 8, home: teams[14], away: teams[16], date: '2026-06-18', time: '20:00', city: cities[7], stadium: cities[7].stadium, price: 170, availability: 'high', group: 'Group G' },
+                { id: 9, home: teams[3], away: teams[4], date: '2026-06-22', time: '20:00', city: cities[0], stadium: cities[0].stadium, price: 400, availability: 'low', group: 'Group Stage' },
+                { id: 10, home: teams[5], away: teams[0], date: '2026-06-25', time: '21:00', city: cities[2], stadium: cities[2].stadium, price: 350, availability: 'medium', group: 'Group Stage' },
+                { id: 11, home: teams[1], away: teams[3], date: '2026-07-01', time: '20:00', city: cities[3], stadium: cities[3].stadium, price: 500, availability: 'low', group: 'Round of 32' },
+                { id: 12, home: teams[4], away: teams[7], date: '2026-07-07', time: '19:00', city: cities[1], stadium: cities[1].stadium, price: 650, availability: 'low', group: 'Quarter-Final' },
+                { id: 13, home: teams[3], away: teams[5], date: '2026-07-14', time: '20:00', city: cities[0], stadium: cities[0].stadium, price: 900, availability: 'low', group: 'Semi-Final' },
+                { id: 14, home: teams[0], away: teams[4], date: '2026-07-19', time: '15:00', city: cities[0], stadium: cities[0].stadium, price: 1500, availability: 'low', group: 'Final' },
+            ];
+
+            const currencyRates = { USD: 1, EUR: 0.92, GBP: 0.79, KES: 130 };
+            const currencySymbols = { USD: '$', EUR: '€', GBP: '£', KES: 'KSh ' };
+
+            function formatPrice(usdPrice) {
+                const rate = currencyRates[currentCurrency] || 1;
+                const symbol = currencySymbols[currentCurrency] || '$';
+                const converted = usdPrice * rate;
+                if (currentCurrency === 'KES') return symbol + Math.round(converted).toLocaleString();
+                return symbol + converted.toFixed(0);
+            }
+
+            function updateCurrency() {
+                currentCurrency = document.getElementById('currencySelect').value;
+                localStorage.setItem('fifa_currency', currentCurrency);
+                renderAll();
+            }
+
+            function toggleTheme() {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                document.getElementById('themeIcon').className = currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                localStorage.setItem('fifa_theme', currentTheme);
+            }
+
+            function initTheme() {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                document.getElementById('themeIcon').className = currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                document.getElementById('currencySelect').value = currentCurrency;
+            }
+
+            function navigateTo(page) {
+                currentPage = page;
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const targetPage = document.getElementById('page-' + page);
+                if (targetPage) targetPage.classList.add('active');
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                const navLink = document.querySelector(`.nav-links a[data-page="${page}"]`);
+                if (navLink) navLink.classList.add('active');
+                document.querySelectorAll('.mobile-bottom-nav a[data-page]').forEach(a => a.classList.remove('active'));
+                const mobLink = document.querySelector(`.mobile-bottom-nav a[data-page="${page}"]`);
+                if (mobLink) mobLink.classList.add('active');
+                if (page === 'home') renderFeaturedMatches();
+                if (page === 'matches') { populateSearchFilters(); renderAllMatches(); }
+                if (page === 'checkout') renderCheckout();
+                if (page === 'dashboard') renderDashboard();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (document.getElementById('navLinks').classList.contains('show')) {
+                    document.getElementById('navLinks').classList.remove('show');
+                }
+            }
+
+            function toggleMobileMenu() {
+                document.getElementById('navLinks').classList.toggle('show');
+            }
+
+            function toggleCart() {
+                const overlay = document.getElementById('cartOverlay');
+                const sidebar = document.getElementById('cartSidebar');
+                const isOpen = sidebar.classList.contains('open');
+                if (isOpen) {
+                    overlay.classList.remove('open');
+                    sidebar.classList.remove('open');
+                } else {
+                    overlay.classList.add('open');
+                    sidebar.classList.add('open');
+                    renderCart();
+                }
+            }
+
+            function addToCart(matchId, category = 'Category 3', price = null, seatId = null) {
+                const match = matches.find(m => m.id === matchId);
+                if (!match) return;
+                const ticketPrice = price || match.price;
+                const existing = cart.find(item => item.matchId === matchId && item.category === category && item.seatId === seatId);
+                if (existing) {
+                    existing.qty += 1;
+                } else {
+                    cart.push({ matchId, category, price: ticketPrice, seatId: seatId || 'GA-' + Date.now(), qty: 1, match: {...match} });
+                }
+                saveCart();
+                showToast('✅ Ticket added to cart!');
+                renderCart();
+                if (!document.getElementById('cartSidebar').classList.contains('open')) toggleCart();
+            }
+
+            function removeFromCart(index) {
+                cart.splice(index, 1);
+                saveCart();
+                renderCart();
+                showToast('🗑️ Item removed');
+            }
+
+            function updateCartQty(index, delta) {
+                if (cart[index].qty + delta <= 0) {
+                    removeFromCart(index);
+                    return;
+                }
+                cart[index].qty += delta;
+                saveCart();
+                renderCart();
+            }
+
+            function saveCart() {
+                localStorage.setItem('fifa_cart', JSON.stringify(cart));
+                updateCartBadge();
+            }
+
+            function updateCartBadge() {
+                const badge = document.getElementById('cartBadge');
+                const total = cart.reduce((sum, item) => sum + item.qty, 0);
+                if (total > 0) {
+                    badge.style.display = 'flex';
+                    badge.textContent = total;
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            function renderCart() {
+                const container = document.getElementById('cartItems');
+                const footer = document.getElementById('cartFooter');
+                if (cart.length === 0) {
+                    container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem;">Your cart is empty.</p>';
+                    footer.style.display = 'none';
+                } else {
+                    container.innerHTML = cart.map((item, i) => `
+                <div class="cart-item">
+                  <div style="font-size:2rem;">${item.match.home.flag} ${item.match.away.flag}</div>
+                  <div class="cart-item-info">
+                    <strong>${item.match.home.name} vs ${item.match.away.name}</strong>
+                    <div style="color:var(--text-muted);font-size:0.75rem;">${item.category} | ${item.match.stadium}</div>
+                    <div style="color:var(--gold);font-weight:600;">${formatPrice(item.price)} × ${item.qty}</div>
+                  </div>
+                  <div class="cart-item-qty">
+                    <button onclick="updateCartQty(${i},-1)">−</button>
+                    <span>${item.qty}</span>
+                    <button onclick="updateCartQty(${i},1)">+</button>
+                  </div>
+                  <button class="btn-icon" style="width:30px;height:30px;font-size:0.8rem;" onclick="removeFromCart(${i})"><i class="fas fa-trash"></i></button>
+                </div>
+              `).join('');
+                    footer.style.display = 'block';
+                    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+                    const serviceFee = subtotal * 0.05;
+                    const tax = subtotal * 0.08;
+                    const grandTotal = subtotal + serviceFee + tax;
+                    document.getElementById('cartSubtotal').textContent = formatPrice(subtotal);
+                    document.getElementById('cartServiceFee').textContent = formatPrice(serviceFee);
+                    document.getElementById('cartTax').textContent = formatPrice(tax);
+                    document.getElementById('cartGrandTotal').textContent = formatPrice(grandTotal);
+                }
+            }
+
+            function renderCheckout() {
+                const container = document.getElementById('checkoutContent');
+                if (cart.length === 0) {
+                    container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem;">Your cart is empty. <a href="#" style="color:var(--gold);" onclick="navigateTo(\'matches\')">Browse matches</a> to add tickets.</p>';
+                    return;
+                }
+                const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+                const grandTotal = subtotal * 1.13;
+                container.innerHTML = `
+              <h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">Complete Your Purchase</h3>
+              <div class="form-row">
+                <div class="form-group"><label>Full Name *</label><input class="form-input" type="text" placeholder="John Doe" id="checkName"></div>
+                <div class="form-group"><label>Email *</label><input class="form-input" type="email" placeholder="john@email.com" id="checkEmail"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Phone Number *</label><input class="form-input" type="tel" placeholder="+1 555 000 0000" id="checkPhone"></div>
+                <div class="form-group"><label>Country *</label><input class="form-input" type="text" placeholder="United States" id="checkCountry"></div>
+              </div>
+              <div class="form-group"><label>Passport Number</label><input class="form-input" type="text" placeholder="Optional" id="checkPassport"></div>
+              <div class="form-group"><label>Billing Address</label><input class="form-input" type="text" placeholder="123 Main Street" id="checkBilling"></div>
+              <div class="form-group">
+                <label>Payment Method</label>
+                <div class="payment-methods" id="paymentMethods">
+                  <div class="payment-option selected" data-payment="visa">💳 Visa</div>
+                  <div class="payment-option" data-payment="mastercard">💳 Mastercard</div>
+                  <div class="payment-option" data-payment="amex">💳 Amex</div>
+                  <div class="payment-option" data-payment="paypal">🅿️ PayPal</div>
+                  <div class="payment-option" data-payment="apple">🍎 Apple Pay</div>
+                  <div class="payment-option" data-payment="google">🔵 Google Pay</div>
+                </div>
+              </div>
+              <div style="background:var(--bg-card);padding:1.5rem;border-radius:var(--radius);margin:1rem 0;border:1px solid var(--border);">
+                <div class="cart-total-row"><span>Subtotal</span><span>${formatPrice(subtotal)}</span></div>
+                <div class="cart-total-row"><span>Service Fee (5%)</span><span>${formatPrice(subtotal*0.05)}</span></div>
+                <div class="cart-total-row"><span>Tax (8%)</span><span>${formatPrice(subtotal*0.08)}</span></div>
+                <div class="cart-total-row grand"><span>Total</span><span>${formatPrice(grandTotal)}</span></div>
+              </div>
+              <button class="btn btn-primary btn-block" onclick="processCheckout()">🔒 Complete Payment — ${formatPrice(grandTotal)}</button>
+              <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin-top:0.8rem;"><i class="fas fa-lock"></i> Secured by 256-bit SSL encryption</p>
+            `;
+                setTimeout(() => {
+                    document.querySelectorAll('#paymentMethods .payment-option').forEach(opt => {
+                        opt.addEventListener('click', function() {
+                            document.querySelectorAll('#paymentMethods .payment-option').forEach(o => o.classList.remove('selected'));
+                            this.classList.add('selected');
+                        });
+                    });
+                }, 100);
+            }
+
+            function processCheckout() {
+                const name = document.getElementById('checkName')?.value.trim();
+                const email = document.getElementById('checkEmail')?.value.trim();
+                const phone = document.getElementById('checkPhone')?.value.trim();
+                const country = document.getElementById('checkCountry')?.value.trim();
+                if (!name || !email || !phone || !country) {
+                    showToast('⚠️ Please fill in all required fields.');
+                    return;
+                }
+                if (!email.includes('@') || !email.includes('.')) {
+                    showToast('⚠️ Please enter a valid email address.');
+                    return;
+                }
+                const orderId = 'FIFA-' + Date.now().toString(36).toUpperCase();
+                cart.forEach(item => {
+                    for (let i = 0; i < item.qty; i++) {
+                        purchasedTickets.push({
+                            orderId,
+                            matchId: item.matchId,
+                            match: {...item.match},
+                            category: item.category,
+                            price: item.price,
+                            seatId: item.seatId || 'SEAT-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                            purchaseDate: new Date().toISOString(),
+                            ticketNumber: 'FWC26-' + Math.random().toString(36).substr(2, 10).toUpperCase(),
+                            gate: ['A', 'B', 'C', 'D', 'E'][Math.floor(Math.random() * 5)],
+                            section: item.category.replace(' ', ''),
+                            row: String.fromCharCode(65 + Math.floor(Math.random() * 20)),
+                            seat: Math.floor(Math.random() * 40) + 1,
+                        });
+                    }
+                });
+                localStorage.setItem('fifa_purchased', JSON.stringify(purchasedTickets));
+                cart = [];
+                saveCart();
+                renderCart();
+                showToast('🎉 Purchase successful! View your tickets in the dashboard.');
+                navigateTo('dashboard');
+                renderDashboard();
+            }
+
+            function switchDashTab(tab, el) {
+                document.querySelectorAll('#dashSidebar a').forEach(a => a.classList.remove('active'));
+                if (el) el.classList.add('active');
+                renderDashboardTab(tab);
+            }
+
+            function renderDashboard() {
+                renderDashboardTab('tickets');
+                document.querySelectorAll('#dashSidebar a').forEach(a => a.classList.remove('active'));
+                const firstLink = document.querySelector('#dashSidebar a[data-dash="tickets"]');
+                if (firstLink) firstLink.classList.add('active');
+            }
+
+            function renderDashboardTab(tab) {
+                const content = document.getElementById('dashContent');
+                if (tab === 'tickets') {
+                    if (purchasedTickets.length === 0) {
+                        content.innerHTML = '<h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">🎫 My Tickets</h3><p style="color:var(--text-muted);">No tickets purchased yet. <a href="#" style="color:var(--gold);" onclick="navigateTo(\'matches\')">Buy your first ticket!</a></p>';
+                    } else {
+                        content.innerHTML = `
+                  <h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">🎫 My Tickets (${purchasedTickets.length})</h3>
+                  ${purchasedTickets.map((t, i) => `
+                    <div class="ticket-card">
+                      <div class="qr-preview" id="qrMini${i}"></div>
+                      <div style="flex:1;">
+                        <strong>${t.match.home.name} vs ${t.match.away.name}</strong>
+                        <div style="color:var(--text-muted);font-size:0.8rem;">${t.match.date} | ${t.match.time} | ${t.match.stadium}</div>
+                        <div style="font-size:0.8rem;">${t.category} | Gate ${t.gate} | Row ${t.row} | Seat ${t.seat}</div>
+                        <div style="color:var(--gold);font-weight:600;">${formatPrice(t.price)}</div>
+                        <div style="font-size:0.7rem;color:var(--text-muted);">Ticket #: ${t.ticketNumber}</div>
+                      </div>
+                      <button class="btn btn-primary btn-sm" onclick="showQRModal(${i})">📱 View Ticket</button>
+                    </div>
+                  `).join('')}
+                `;
+                        setTimeout(() => {
+                            purchasedTickets.forEach((t, i) => {
+                                const el = document.getElementById('qrMini' + i);
+                                if (el && typeof QRCode !== 'undefined') {
+                                    el.innerHTML = '';
+                                    new QRCode(el, { text: t.ticketNumber, width: 70, height: 70, colorDark: '#000', colorLight: '#fff' });
+                                }
+                            });
+                        }, 300);
+                    }
+                } else if (tab === 'upcoming') {
+                    const upcoming = purchasedTickets.filter(t => new Date(t.match.date) >= new Date());
+                    content.innerHTML = `<h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">📅 Upcoming Matches</h3>${upcoming.length===0?'<p style="color:var(--text-muted);">No upcoming matches.</p>':upcoming.map(t=>`<div class="ticket-card"><div style="font-size:2rem;">${t.match.home.flag} ${t.match.away.flag}</div><div><strong>${t.match.home.name} vs ${t.match.away.name}</strong><div style="color:var(--text-muted);">${t.match.date} | ${t.match.time}</div></div></div>`).join('')}`;
+                } else if (tab === 'history') {
+                    content.innerHTML = `<h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">📜 Purchase History</h3>${purchasedTickets.length===0?'<p style="color:var(--text-muted);">No purchase history.</p>':purchasedTickets.map(t=>`<div class="ticket-card"><div>Order: <strong>${t.orderId}</strong></div><div>${t.match.home.name} vs ${t.match.away.name}</div><div style="color:var(--text-muted);">${new Date(t.purchaseDate).toLocaleDateString()}</div><div>${formatPrice(t.price)}</div></div>`).join('')}`;
+                } else if (tab === 'profile') {
+                    content.innerHTML = `
+                <h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">👤 Profile Settings</h3>
+                <div class="glass-card">
+                  <div class="form-group"><label>Full Name</label><input class="form-input" value="John Doe"></div>
+                  <div class="form-group"><label>Email</label><input class="form-input" value="john@email.com"></div>
+                  <div class="form-group"><label>Phone</label><input class="form-input" value="+1 555 000 0000"></div>
+                  <div class="form-group"><label>Country</label><input class="form-input" value="United States"></div>
+                  <button class="btn btn-primary">Save Changes</button>
+                </div>`;
+                } else if (tab === 'notifications') {
+                    content.innerHTML = `
+                <h3 style="font-family:var(--font-heading);margin-bottom:1.5rem;">🔔 Notifications</h3>
+                <div class="glass-card">
+                  <p>📧 <strong>Ticket Alert:</strong> Semi-Final tickets now available!</p><p style="color:var(--text-muted);">2 hours ago</p>
+                  <hr style="border-color:var(--border);margin:1rem 0;">
+                  <p>✅ <strong>Purchase Confirmed:</strong> Your tickets for USA vs Canada have been confirmed.</p><p style="color:var(--text-muted);">3 days ago</p>
+                  <hr style="border-color:var(--border);margin:1rem 0;">
+                  <p>⭐ <strong>Reminder:</strong> World Cup kicks off in 8 days!</p><p style="color:var(--text-muted);">1 week ago</p>
+                </div>`;
+                }
+            }
+
+            function showQRModal(ticketIndex) {
+                const t = purchasedTickets[ticketIndex];
+                const modal = document.getElementById('qrModal');
+                const content = document.getElementById('qrModalContent');
+                content.innerHTML = `
+              <h3 style="font-family:var(--font-heading);text-align:center;margin-bottom:1rem;">🎫 Digital Ticket</h3>
+              <div style="text-align:center;margin:1rem 0;" id="qrBig"></div>
+              <div style="text-align:center;background:var(--bg-card);padding:1.2rem;border-radius:var(--radius);border:1px solid var(--border);">
+                <h4 style="font-family:var(--font-heading);">${t.match.home.name} vs ${t.match.away.name}</h4>
+                <p style="color:var(--text-muted);">${t.match.date} | ${t.match.time}</p>
+                <p>🏟️ ${t.match.stadium}</p>
+                <p><strong>Gate:</strong> ${t.gate} | <strong>Section:</strong> ${t.section} | <strong>Row:</strong> ${t.row} | <strong>Seat:</strong> ${t.seat}</p>
+                <p style="color:var(--gold);font-weight:700;">${t.category} — ${formatPrice(t.price)}</p>
+                <p style="font-size:0.75rem;color:var(--text-muted);">Ticket #: ${t.ticketNumber}</p>
+              </div>
+              <button class="btn btn-outline btn-block" style="margin-top:1rem;" onclick="closeQRModal()">Close</button>
+            `;
+                modal.classList.add('open');
+                setTimeout(() => {
+                    const el = document.getElementById('qrBig');
+                    if (el && typeof QRCode !== 'undefined') {
+                        new QRCode(el, { text: t.ticketNumber, width: 200, height: 200, colorDark: '#000', colorLight: '#fff' });
+                    }
+                }, 200);
+            }
+
+            function closeQRModal() {
+                document.getElementById('qrModal').classList.remove('open');
+            }
+            document.getElementById('qrModal').addEventListener('click', function(e) { if (e.target === this) closeQRModal(); });
+
+            function renderMatchCard(match) {
+                const availClass = match.availability;
+                const availText = { high: 'Available', medium: 'Selling Fast', low: 'Limited!' }[availClass] || 'Available';
+                return `
+              <div class="match-card" onclick="viewTicketDetail(${match.id})">
+                <div class="match-card-header">
+                  <div class="team"><div class="team-flag">${match.home.flag}</div><div class="team-name">${match.home.name}</div></div>
+                  <div class="vs">VS</div>
+                  <div class="team"><div class="team-flag">${match.away.flag}</div><div class="team-name">${match.away.name}</div></div>
+                </div>
+                <div class="match-card-body">
+                  <div class="match-info-row"><i class="fas fa-calendar"></i> ${match.date}</div>
+                  <div class="match-info-row"><i class="fas fa-clock"></i> ${match.time} (Local)</div>
+                  <div class="match-info-row"><i class="fas fa-map-marker-alt"></i> ${match.stadium}, ${match.city.name}</div>
+                  <div class="match-info-row"><i class="fas fa-tag"></i> ${match.group}</div>
+                </div>
+                <div class="match-card-footer">
+                  <div><span class="availability-dot ${availClass}"></span> ${availText}</div>
+                  <div class="ticket-price">From ${formatPrice(match.price)}</div>
+                </div>
+              </div>`;
+            }
+
+            function renderFeaturedMatches() {
+                const container = document.getElementById('featuredMatches');
+                container.innerHTML = matches.slice(0, 6).map(m => renderMatchCard(m)).join('');
+            }
+
+            function renderAllMatches(filtered = null) {
+                const container = document.getElementById('allMatches');
+                const data = filtered || matches;
+                container.innerHTML = data.map(m => renderMatchCard(m)).join('');
+                document.getElementById('noMatchesMsg').style.display = data.length === 0 ? 'block' : 'none';
+            }
+
+            function populateSearchFilters() {
+                const citySelect = document.getElementById('searchCity');
+                const stadiumSelect = document.getElementById('searchStadium');
+                citySelect.innerHTML = '<option value="">All Cities</option>' + cities.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+                const uniqueStadiums = [...new Set(matches.map(m => m.stadium))];
+                stadiumSelect.innerHTML = '<option value="">All Stadiums</option>' + uniqueStadiums.map(s => `<option value="${s}">${s}</option>`).join('');
+            }
+
+            function filterMatches() {
+                const team = document.getElementById('searchTeam').value.toLowerCase();
+                const city = document.getElementById('searchCity').value;
+                const stadium = document.getElementById('searchStadium').value;
+                const date = document.getElementById('searchDate').value;
+                const filtered = matches.filter(m => {
+                    if (team && !(m.home.name+' '+m.away.name+' '+m.home.code+' '+m.away.code).toLowerCase().includes(team)) return false;
+                    if (city && m.city.name !== city) return false;
+                    if (stadium && m.stadium !== stadium) return false;
+                    if (date && m.date !== date) return false;
+                    return true;
+                });
+                renderAllMatches(filtered);
+            }
+
+            function viewTicketDetail(matchId) {
+                const match = matches.find(m => m.id === matchId);
+                if (!match) return;
+                currentPage = 'ticket-detail';
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-ticket-detail').classList.add('active');
+                selectedSeats = [];
+                const content = document.getElementById('ticketDetailContent');
+                content.innerHTML = `
+              <div>
+                <button class="btn btn-outline btn-sm" style="margin-bottom:1rem;" onclick="navigateTo('matches')">← Back to Matches</button>
+                <div class="glass-card">
+                  <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap;margin-bottom:1.5rem;">
+                    <div style="font-size:3rem;">${match.home.flag}</div>
+                    <div style="text-align:center;"><h2 style="font-family:var(--font-heading);">${match.home.name} vs ${match.away.name}</h2><p style="color:var(--text-muted);">${match.group}</p></div>
+                    <div style="font-size:3rem;">${match.away.flag}</div>
+                  </div>
+                  <div class="match-info-row"><i class="fas fa-calendar"></i> <strong>${match.date}</strong> at ${match.time}</div>
+                  <div class="match-info-row"><i class="fas fa-map-marker-alt"></i> ${match.stadium}, ${match.city.name}</div>
+                  <div class="match-info-row"><i class="fas fa-users"></i> Capacity: ${match.city.capacity}</div>
+                  <div style="margin-top:1rem;"><span class="availability-dot ${match.availability}"></span> <strong>${match.availability==='high'?'Available':match.availability==='medium'?'Selling Fast':'Limited Tickets!'}</strong></div>
+                </div>
+                <div style="margin-top:1.5rem;">
+                  <h4 style="font-family:var(--font-heading);margin-bottom:1rem;">Ticket Categories</h4>
+                  ${['Category 1','Category 2','Category 3','VIP Hospitality'].map((cat,i)=>{
+                    const prices=[match.price*2.5,match.price*1.6,match.price,match.price*5];
+                    const benefits=['Premium center seats, lounge access','Great views, comfortable seating','Standard seating, great value','VIP lounge, catering, best views'];
+                    const stock=[Math.floor(Math.random()*50)+5,Math.floor(Math.random()*100)+10,Math.floor(Math.random()*200)+20,Math.floor(Math.random()*10)+2];
+                    return `<div class="glass-card" style="margin-bottom:0.8rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+                      <div><strong>${cat}</strong><div style="font-size:0.8rem;color:var(--text-muted);">${benefits[i]}</div><div style="font-size:0.75rem;color:var(--text-muted);">${stock} tickets left</div></div>
+                      <div style="text-align:right;"><div style="font-weight:700;color:var(--gold);font-size:1.2rem;">${formatPrice(prices[i])}</div>
+                      <button class="btn btn-primary btn-sm" onclick="addToCart(${match.id},'${cat}',${prices[i]})">Add to Cart</button></div>
+                    </div>`;
+                  }).join('')}
+                </div>
+              </div>
+              <div class="stadium-map glass-card">
+                <h4 style="font-family:var(--font-heading);text-align:center;margin-bottom:1rem;">🏟️ Interactive Seating Map</h4>
+                <p style="text-align:center;color:var(--text-muted);font-size:0.8rem;margin-bottom:1rem;">Click seats to select — <span style="color:#c9a84c;">Cat 1</span> | <span style="color:#3b7ddd;">Cat 2</span> | <span style="color:#2ecc71;">Cat 3</span> | <span style="color:#e74c3c;">VIP</span></p>
+                <div class="seating-area" id="seatingArea"></div>
+                <p style="text-align:center;margin-top:1rem;font-size:0.8rem;color:var(--text-muted);">Selected: <span id="selectedSeatInfo">None</span></p>
+                <button class="btn btn-primary btn-block" style="margin-top:0.5rem;" id="btnSelectSeats" disabled onclick="addSelectedSeats(${match.id})">Add Selected Seats to Cart</button>
+              </div>`;
+                setTimeout(() => {
+                    const seatingArea = document.getElementById('seatingArea');
+                    let seatsHTML = '';
+                    for (let i = 0; i < 64; i++) {
+                        const cat = i < 16 ? 'vip' : i < 32 ? 'cat1' : i < 48 ? 'cat2' : 'cat3';
+                        const taken = Math.random() < 0.3;
+                        seatsHTML += `<div class="seat ${cat} ${taken?'taken':''}" data-seat="${i}" data-cat="${cat}" onclick="${taken?'':'selectSeat(this)'}">${i+1}</div>`;
+                    }
+                    seatingArea.innerHTML = seatsHTML;
+                }, 200);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function selectSeat(el) {
+                if (el.classList.contains('taken')) return;
+                el.classList.toggle('selected');
+                const seatId = el.dataset.seat;
+                const cat = el.dataset.cat;
+                if (el.classList.contains('selected')) {
+                    selectedSeats.push({ seatId, cat });
+                } else {
+                    selectedSeats = selectedSeats.filter(s => s.seatId !== seatId);
+                }
+                document.getElementById('selectedSeatInfo').textContent = selectedSeats.length > 0 ? selectedSeats.map(s => `Seat ${parseInt(s.seatId)+1} (${s.cat})`).join(', ') : 'None';
+                document.getElementById('btnSelectSeats').disabled = selectedSeats.length === 0;
+            }
+
+            function addSelectedSeats(matchId) {
+                const match = matches.find(m => m.id === matchId);
+                if (!match || selectedSeats.length === 0) return;
+                const prices = { vip: match.price*5, cat1: match.price*2.5, cat2: match.price*1.6, cat3: match.price };
+                const names = { vip: 'VIP Hospitality', cat1: 'Category 1', cat2: 'Category 2', cat3: 'Category 3' };
+                selectedSeats.forEach(s => addToCart(matchId, names[s.cat], prices[s.cat], s.seatId));
+                selectedSeats = [];
+                document.getElementById('selectedSeatInfo').textContent = 'None';
+                document.getElementById('btnSelectSeats').disabled = true;
+                document.querySelectorAll('.seat.selected').forEach(s => s.classList.remove('selected'));
+                if (document.getElementById('cartSidebar').classList.contains('open')) renderCart();
+            }
+
+            function renderCityCards() {
+                document.getElementById('cityCards').innerHTML = cities.map(c => `
+              <div class="city-card">
+                <div class="city-card-img">${c.icon}</div>
+                <div class="city-card-body"><h4>${c.name}</h4><p>🏟️ ${c.stadium}</p><p class="capacity">Capacity: ${c.capacity} | ${c.country}</p></div>
+              </div>`).join('');
+            }
+
+            function updateCountdown() {
+                const target = new Date('2026-06-11T15:00:00-04:00').getTime();
+                const diff = Math.max(0, target - Date.now());
+                document.getElementById('countDays').textContent = String(Math.floor(diff/(1000*60*60*24))).padStart(2,'0');
+                document.getElementById('countHours').textContent = String(Math.floor((diff/(1000*60*60))%24)).padStart(2,'0');
+                document.getElementById('countMins').textContent = String(Math.floor((diff/(1000*60))%60)).padStart(2,'0');
+                document.getElementById('countSecs').textContent = String(Math.floor((diff/1000)%60)).padStart(2,'0');
+            }
+
+            function showToast(msg) {
+                const t = document.createElement('div'); t.className='toast'; t.textContent=msg;
+                document.getElementById('toastContainer').appendChild(t);
+                setTimeout(()=>t.remove(),3000);
+            }
+
+            function renderAll() {
+                renderFeaturedMatches(); renderCityCards(); renderCart(); updateCartBadge(); updateCountdown();
+                if (currentPage==='matches'){populateSearchFilters();renderAllMatches();}
+                if (currentPage==='checkout') renderCheckout();
+                if (currentPage==='dashboard') renderDashboard();
+            }
+
+            function init() {
+                initTheme();
+                renderFeaturedMatches(); renderCityCards(); updateCartBadge(); updateCountdown();
+                setInterval(updateCountdown,1000);
+                window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50));
+                document.addEventListener('click',e=>{if(!e.target.closest('.navbar')&&document.getElementById('navLinks').classList.contains('show'))document.getElementById('navLinks').classList.remove('show');});
+                document.addEventListener('keydown',e=>{
+                    if(e.key==='Escape'){
+                        if(document.getElementById('cartSidebar').classList.contains('open')) toggleCart();
+                        if(document.getElementById('qrModal').classList.contains('open')) closeQRModal();
+                    }
+                });
+                updateCartBadge();
+            }
+
+            window.navigateTo = navigateTo;
+            window.toggleTheme = toggleTheme;
+            window.toggleCart = toggleCart;
+            window.toggleMobileMenu = toggleMobileMenu;
+            window.addToCart = addToCart;
+            window.removeFromCart = removeFromCart;
+            window.updateCartQty = updateCartQty;
+            window.viewTicketDetail = viewTicketDetail;
+            window.selectSeat = selectSeat;
+            window.addSelectedSeats = addSelectedSeats;
+            window.showQRModal = showQRModal;
+            window.closeQRModal = closeQRModal;
+            window.processCheckout = processCheckout;
+            window.switchDashTab = switchDashTab;
+            window.updateCurrency = updateCurrency;
+            window.filterMatches = filterMatches;
+            init();
+        })();
+    </script>
+</body>
+</html>
